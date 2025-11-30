@@ -32,6 +32,7 @@ public class Main {
         panel.add(campo, BorderLayout.CENTER);
         panel.add(botonAdd, BorderLayout.EAST);
         ventana.add(panel, BorderLayout.NORTH);
+
         //Panel central
         String[] columnas = {"ID", "Tarea", "COMPLETADA"};
         DefaultTableModel modelo = new DefaultTableModel(columnas, 0){
