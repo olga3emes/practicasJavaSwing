@@ -1,316 +1,78 @@
 package org.example;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
-    // 1. ¿Qué es Java Swing?
-
-    /* Swing: biblioteca para crear GUI.
-    Viene incluida en Java, podemos crear: ventanas, textos, menús...
-
-    Los elementos a los que nos referimos llevan el nombre de componentes.
-    Y el paquete es javax.swing
-     */
-
-    //2. Crear la primera ventana (JFrame)
-    /* JFrame para todas las apps de Java Swing su 💖, y representa una ventana.*/
-
-    public static void usandoJFrame() {
-        JFrame ventana = new JFrame("Mi primera ventana");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //cierra al salir
-        ventana.setVisible(true); //hace visible la ventana
-    }
-
-    //3. Agregar un JLabel
-
-    /*
-    El JLabel permite mostrar texto.
-
-    Por defecto, el layout de JFrame ws BorderLayout, y si añadimos solo 1 componente, ocupa todo el espacio.
-
-     */
-    public static void usandoJLabel() {
-        JFrame ventana = new JFrame("Mi primera ventana");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //cierra al salir
-
-        JLabel texto = new JLabel("Hola DAM!");
-        ventana.add(texto);
-
-        ventana.setVisible(true); //hace visible la ventana
-    }
-
-    //4. Agregar un botón y capturar eventos
-    /*
-    El JButton es un botón que el usuario puede pulsa. Y para que algo al hacer click, haga algo,
-    teneemos que escuchar eventos usando ActionListener.
-     */
-
-    public static void usandoJButtonEvento() {
-        JFrame ventana = new JFrame("Mi primera ventana");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //cierra al salir
-
-        JButton boton = new JButton("Haz click aquí");
-        boton.setBounds(120, 70, 150, 30); //x,y,ancho y alto
-        ventana.add(boton);
-
-        //Crear el evento
-        boton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(ventana, "Botón presionado");
-        });
-
-        JLabel texto = new JLabel("Hola DAM!");
-        ventana.add(texto);
-
-        ventana.setVisible(true); //hace visible la ventana
-
-    }
-
-
-    //5. Agregar JTextField (campo de texto)
-    /*
-    Ahora vamos a permitir que el usuario ingrese datos, por ejemplo su nombre.
-    Y vamos a añadir un botón que use ese nombre para decirle hola.
-     */
-    public static void usandoJTextField() {
-        JFrame ventana = new JFrame("Mi primera ventana");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setLayout(null);
-        //cierra al salir
-        JLabel etiqueta = new JLabel("Ingresa tu nombre:");
-        etiqueta.setBounds(50, 30, 150, 25);
-        ventana.add(etiqueta);
-
-        JButton boton = new JButton("Saludar");
-        boton.setBounds(140, 80, 80, 20); //x,y,ancho y alto
-        ventana.add(boton);
-
-        JTextField campoTexto = new JTextField();
-        campoTexto.setBounds(180, 30, 100, 25);
-        ventana.add(campoTexto);
-
-        //Crear el evento
-        boton.addActionListener(e -> {
-            String nombre = campoTexto.getText();
-            JOptionPane.showMessageDialog(ventana, "Hola " + nombre + "!");
-        });
-
-        ventana.setVisible(true);
-    }
-
-    //6. Layouts en Swing
-
-    /*
-    setLayout(null) -> Usamos coordenadas. Poco práctico, una lata...
-
-    FlowLayout -> Componentes de fila, ajuste automático
-    BorderLayout-> Ventana dividida en norte, sur, este, oeste y centro
-    GridLayout -> Tabla con filas y columnas iguales
-    BoxLayout -> Fila o Columna con alineación
-
-     */
-
-    public static void usandoFlowLayout() {
-        JFrame ventana = new JFrame("FlowLayout");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setLayout(new FlowLayout());
-
-        ventana.add(new JButton("Botón 1"));
-        ventana.add(new JButton("Botón 2"));
-        ventana.add(new JButton("Botón 3"));
-
-        ventana.setVisible(true);
-    }
-
-    public static void usandoGridLayout() {
-        JFrame ventana = new JFrame("GridLayout");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setLayout(new GridLayout(4, 2, 5, 5)); //filas, columnas,gapy,gapx
-
-        ventana.add(new JButton("Botón 1"));
-        ventana.add(new JButton("Botón 2"));
-        ventana.add(new JButton("Botón 3"));
-        ventana.add(new JButton("Botón 4"));
-
-        ventana.setVisible(true);
-    }
-
-    public static void usandoBorderLayout() {
-        JFrame ventana = new JFrame("BorderLayout");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setLayout(new BorderLayout()); //filas, columnas,gapy,gapx
-
-        ventana.add(new JButton("Norte"), BorderLayout.NORTH);
-        ventana.add(new JButton("sur"), BorderLayout.SOUTH);
-        ventana.add(new JButton("este"), BorderLayout.EAST);
-        ventana.add(new JButton("oeste"), BorderLayout.WEST);
-        ventana.add(new JButton("centro"), BorderLayout.CENTER);
-
-        ventana.setVisible(true);
-
-    }
-
-    public static void usandoBoxLayout() {
-        JFrame ventana = new JFrame("BoxLayout");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setLayout(new BoxLayout(ventana.getContentPane(), BoxLayout.Y_AXIS)); //filas, columnas,gapy,gapx
-
-        ventana.add(new JButton("One"));
-        ventana.add(new JButton("Two"));
-        ventana.add(new JButton("Three"));
-        ventana.add(new JButton("Four"));
-
-        ventana.setVisible(true);
-    }
-
-    public static void usandoVariosLayout() {
-        JFrame ventana = new JFrame("Combination Layout");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setLayout(new BorderLayout()); //filas, columnas,gapy,gapx
-
-        JPanel topPanel = new JPanel();
-        topPanel.add(new JLabel("Resultado:"));
-        topPanel.add(new JTextField(10));
-        ventana.add(topPanel, BorderLayout.NORTH);
-
-        JPanel centerPanel = new JPanel(new GridLayout(4, 4));
-        centerPanel.add(new JButton("1"));
-        centerPanel.add(new JButton("2"));
-        centerPanel.add(new JButton("3"));
-        centerPanel.add(new JButton("4"));
-        centerPanel.add(new JButton("5"));
-        centerPanel.add(new JButton("6"));
-        centerPanel.add(new JButton("7"));
-        centerPanel.add(new JButton("8"));
-        centerPanel.add(new JButton("9"));
-        centerPanel.add(new JButton("C"));
-        ventana.add(centerPanel, BorderLayout.CENTER);
-
-
-        ventana.setVisible(true);
-    }
-
-    public static void usandoJList() {
-        JFrame ventana = new JFrame("JList");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        String[] frutas = {"Apple", "Orange", "pear", "Lemon"};
-
-        JList<String> lista = new JList<>(frutas);
-        JScrollPane scroll = new JScrollPane(lista);
-        ventana.add(scroll);
-
-        ventana.setVisible(true);
-    }
-
-
-    public static void usandoJTable() {
-        JFrame ventana = new JFrame("JTable");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        String[][] datos = {
-                {"1", "Juan", "25"},
-                {"2", "Ana", "30"},
-                {"3", "Luis", "29"}
-        };
-
-        String[] columnas = {"ID", "Nombre", "Edad"};
-
-        JTable tabla = new JTable(datos, columnas);
-        JScrollPane scroll = new JScrollPane(tabla);
-        ventana.add(scroll);
-
-        ventana.setVisible(true);
-    }
-
-    public static void usandoListaDinamica() {
-        JFrame ventana = new JFrame("JList + JButton");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setLayout(new BorderLayout(5, 5));
-
-        DefaultListModel<String> modelo = new DefaultListModel<>();//Array
-        JList<String> lista = new JList<>(modelo);
-        JScrollPane scrollPane = new JScrollPane(lista);
-        ventana.add(scrollPane, BorderLayout.CENTER);
-
-        JTextField campo = new JTextField();
-        JButton botonAdd = new JButton("Agregar");
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(campo, BorderLayout.CENTER);
-        panel.add(botonAdd, BorderLayout.EAST);
-        ventana.add(panel, BorderLayout.NORTH);
-
-        JButton botonMostrar = new JButton("Mostrar selección");
-        ventana.add(botonMostrar, BorderLayout.SOUTH);
-
-        //Evento agregar
-        botonAdd.addActionListener(e -> {
-            String texto = campo.getText();
-            if (!texto.isEmpty()) {
-                modelo.addElement(texto);
-                campo.setText("");
-            }
-        });
-
-        //Mostrar seleccion
-        botonMostrar.addActionListener(e -> {
-            String seleccionado = lista.getSelectedValue();
-            if (seleccionado != null) {
-                JOptionPane.showMessageDialog(ventana, " ✏  ️Seleccionaste: " + seleccionado);
-            } else {
-                JOptionPane.showMessageDialog(ventana, "❌ No hay selección");
-            }
-        });
-
-        ventana.setVisible(true);
-
-    }
-
-
     public static void main(String[] args) {
-
-        // usandoJFrame();
-        //usandoJLabel();
-        // usandoJButtonEvento();
-        //usandoJTextField();
-        //usandoFlowLayout();
-        //usandoBorderLayout();
-        //usandoBoxLayout();
-        //usandoVariosLayouts();
-        JFrame ventana = new JFrame("JTable interactiva");
-        ventana.setSize(400, 300); //Tamaño: ancho alto
+        JFrame ventana = new JFrame("Gestor de Tareas");
+        ventana.setSize(600, 300); //Tamaño: ancho alto
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setLayout(new BorderLayout(5, 5));
+        ventana.setLayout(new BorderLayout(10, 10));
+        ventana.getContentPane().setBackground(new Color(230,230,250));
 
         //panel superior
+
         JTextField campo = new JTextField();
         JButton botonAdd = new JButton("Agregar Tarea");
-        JPanel panel = new JPanel(new BorderLayout());
+        JPanel panel = new JPanel(new BorderLayout(5,5));
+        panel.setBackground(new Color(200,200,255));
+        botonAdd.setBackground(new Color(100,149,237));
+        botonAdd.setForeground(Color.WHITE);
+        botonAdd.setFocusPainted(false);
         panel.add(campo, BorderLayout.CENTER);
         panel.add(botonAdd, BorderLayout.EAST);
         ventana.add(panel, BorderLayout.NORTH);
-
         //Panel central
-        String[] columnas = {"ID", "Tarea"};
-        DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+        String[] columnas = {"ID", "Tarea", "COMPLETADA"};
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0){
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+               if(columnIndex==2){
+                   return Boolean.class;//Checkbox
+               }
+               return String.class;
+            }
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 2 ; //solo editable checkbox
+            }
+        };
         JTable table = new JTable(modelo);
+        table.setFont(new Font("Arial",Font.PLAIN, 16));
+        table.setRowHeight(20);
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                Boolean completada = (Boolean) table.getValueAt(row,2);
+
+                if(completada !=null && completada){
+                    c.setForeground(new Color(150,255,230));
+                    c.setFont(c.getFont().deriveFont(Font.ITALIC));
+                }else{
+                    c.setForeground(Color.gray);
+                    c.setFont(c.getFont().deriveFont(Font.PLAIN));
+                }
+                if(isSelected){
+                    c.setBackground(new Color(173,216,230));
+                }else{
+                    c.setBackground(Color.WHITE);
+                }
+                return c;
+            }
+        });
+
         JScrollPane scroll = new JScrollPane(table);
         ventana.add(scroll, BorderLayout.CENTER);
 
@@ -322,6 +84,19 @@ public class Main {
         panelBotones.add(eliminar);
         ventana.add(panelBotones, BorderLayout.SOUTH);
 
+        //Archivo
+        File archivo = new File("tareas.txt");
+        if(archivo.exists()){
+            try(Scanner sc = new Scanner(archivo)){
+                while(sc.hasNextLine()){
+                    String linea = sc.nextLine();
+                    modelo.addRow(new Object[]{modelo.getRowCount() + 1, linea});
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(ventana, "Error al cargar las tareas");
+            }
+        }
+
         //Evento agregar
         botonAdd.addActionListener(e -> {
             String tarea = campo.getText().trim();
@@ -329,6 +104,7 @@ public class Main {
                 int id = modelo.getRowCount() + 1;
                 modelo.addRow(new Object[]{id, tarea});
                 campo.setText("");
+                guardarTareas(modelo,archivo);
             }
         });
 
@@ -341,6 +117,7 @@ public class Main {
                 );
                 if (nuevaTarea != null && !nuevaTarea.trim().isEmpty()) {
                     modelo.setValueAt(nuevaTarea.trim(), fila, 1);
+                    guardarTareas(modelo,archivo);
                 }
             } else {
                 JOptionPane.showMessageDialog(ventana, "selecciona una tarea para editar");
@@ -354,15 +131,34 @@ public class Main {
             int fila = table.getSelectedRow();
             if(fila !=-1){
                 modelo.removeRow(fila);
+                actualizarIDs(modelo);
+                guardarTareas(modelo,archivo);
+
             }else{
                 JOptionPane.showMessageDialog(ventana, "selecciona una tarea para eliminar");
             }
-
         });
 
         ventana.setVisible(true);
 
     }
 
+    public static void guardarTareas(DefaultTableModel modelo, File archivo){
+        try(PrintWriter pw = new PrintWriter(archivo)){
+            for (int i =0; i<modelo.getRowCount(); i++){
+                pw.println(modelo.getValueAt(i,1));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-}
+    public static void actualizarIDs(DefaultTableModel modelo){
+        for (int i=0; i< modelo.getRowCount(); i++){
+            modelo.setValueAt(i+1,i,0);
+        }
+    }
+
+
+
+}//endclass
